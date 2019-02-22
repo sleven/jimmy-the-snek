@@ -64,12 +64,13 @@ def move():
         [False] * data['board']['width'],
         [False] * data['board']['height'],
     ]
+    print(board)
 
-
-    for snakes in data['board']['snakes']:
-        for snake in snakes:
-            board[0][snake['body'][0]['x']] = True
-            board[1][snake['body'][0]['y']] = True
+    for snake in data['board']['snakes']:
+        print("snake")
+        print(snake)
+        board[0][snake['body'][0]['x']] = True
+        board[1][snake['body'][0]['y']] = True
 
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
