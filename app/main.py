@@ -88,7 +88,7 @@ def move():
     elif current_x > 1 and last_direction != 'right':
         if not board[0][current_x - 1]:
             direction = 'left'
-    elif current_y + 1 < len(board[1]) and last_direction != 'down':
+    elif current_y > 0 and last_direction != 'down':
         if not board[1][current_y + 1]:
             direction = 'up'
     else:
