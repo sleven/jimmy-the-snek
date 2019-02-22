@@ -94,6 +94,7 @@ def move():
     else:
         direction = 'down'
 
+    print("Moving: {}".format(direction))
     last_direction = direction
     return move_response(direction)
 
