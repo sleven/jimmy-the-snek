@@ -84,7 +84,7 @@ def move():
     board[1][current_y] = True
 
     direction = 'down'
-
+    #comment
     if current_x + 1 < len(board[0]) and last_direction != 'left':
         if not board[0][current_x + 1]:
             direction = 'right'
