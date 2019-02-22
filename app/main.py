@@ -93,7 +93,7 @@ def move():
             direction = 'up'
     else:
         direction = 'down'
-
+    print("Last direction: {}".format(last_direction))
     print("Moving: {}".format(direction))
     last_direction = direction
     return move_response(direction)
