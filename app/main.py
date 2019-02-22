@@ -51,6 +51,11 @@ def start():
 
     return start_response(args)
 
+def set_board(board, pos, val):
+    try:
+        board[board][pos] = val
+    except Exception:
+        pass
 
 @bottle.post('/move')
 def move():
@@ -75,10 +80,10 @@ def move():
         print(snake)
         for i,pos in enumerate(snake['body']):
             if i == 0:
-                board[0][pos['x'] + 1] = True
-                board[0][pos['x'] - 1] = True
-                board[1][pos['y'] + 1] = True
-                board[1][pos['y'] - 1] = True
+                set_board(board[0], [pos['x'] + 1], True)
+                set_board(board[0], [pos['x'] - 1], True)
+                set_board(board[0], [pos['y'] + 1], True)
+                set_board(board[0], [pos['y'] - 1], True)
 
             board[0][pos['x']] = True
             board[1][pos['y']] = True
