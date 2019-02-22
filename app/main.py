@@ -41,9 +41,13 @@ def start():
     """
     print(json.dumps(data))
 
-    color = "#00FF00"
+    args = {
+        'color': '#00FFFF',
+        'headType': 'evil',
+        'tailType':'small-rattle'
+    }
 
-    return start_response(color)
+    return start_response(args)
 
 
 @bottle.post('/move')
@@ -56,8 +60,28 @@ def move():
     """
     print(json.dumps(data))
 
-    directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
+    board = [
+        [False] * data['board']['width'],
+        [False] * data['board']['height'],
+    ]
+
+
+    for snakes in data['board']['snakes']:
+        for snake in snakes:
+            board[0][snake['body'][0]['x']] = True
+            board[1][snake['body'][0]['y']] = True
+
+    current_x = data['you']['body'][0]['x']
+    current_y = data['you']['body'][0]['y']
+
+    if not board[0][current_x + 1]:
+        direction = 'right'
+    elif not board[0][current_x - 1]:
+        direction = 'left'
+    elif not board[1][current_y + 1]:
+        direction = 'up'
+    else:
+        direction = 'down'
 
     return move_response(direction)
 
