@@ -73,7 +73,13 @@ def move():
     for snake in data['board']['snakes']:
         print("snake")
         print(snake)
-        for pos in snake['body']:
+        for i,pos in enumerate(snake['body']):
+            if i == 0:
+                board[0][pos['x'] + 1] = True
+                board[0][pos['x'] - 1] = True
+                board[1][pos['y'] + 1] = True
+                board[1][pos['y'] - 1] = True
+
             board[0][pos['x']] = True
             board[1][pos['y']] = True
 
