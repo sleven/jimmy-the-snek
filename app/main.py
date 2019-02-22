@@ -75,11 +75,11 @@ def move():
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
 
-    if not board[0][current_x + 1]:
+    if not board[0][current_x + 1] and current_x + 1 < len(board[0]) + 1:
         direction = 'right'
-    elif not board[0][current_x - 1]:
+    elif not board[0][current_x - 1] and current_x > 0:
         direction = 'left'
-    elif not board[1][current_y + 1]:
+    elif not board[1][current_y + 1] and current_y + 1 < len(board[1]) + 1:
         direction = 'up'
     else:
         direction = 'down'
