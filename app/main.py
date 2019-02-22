@@ -51,9 +51,9 @@ def start():
 
     return start_response(args)
 
-def set_board(board, pos, val):
+def set_board(board, xpos, ypos, val):
     try:
-        board[board][pos] = val
+        board[ypos][xpos] = val
     except Exception:
         pass
 
@@ -70,39 +70,36 @@ def move():
     print(json.dumps(data))
 
     board = [
-        [False] * data['board']['width'],
-        [False] * data['board']['height'],
+        [[False] * data['board']['width']] * data['board']['height'],
     ]
-    print(board)
 
     for snake in data['board']['snakes']:
         print("snake")
         print(snake)
         for i,pos in enumerate(snake['body']):
             if i == 0:
-                set_board(board[0], [pos['x'] + 1], True)
-                set_board(board[0], [pos['x'] - 1], True)
-                set_board(board[0], [pos['y'] + 1], True)
-                set_board(board[0], [pos['y'] - 1], True)
+                set_board(board, pos['x'] + 1, pos['y'], True)
+                set_board(board, pos['x'] - 1, pos['y'], True)
+                set_board(board, pos['x'], pos['y'] + 1, True)
+                set_board(board, pos['x'], pos['y'] - 1, True)
 
-            board[0][pos['x']] = True
-            board[1][pos['y']] = True
+            set_board(board, pos['x'], pos['y'], True)
 
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
 
-    board[0][current_x] = True
-    board[1][current_y] = True
+    for row in board:
+        print(row)
 
     direction = 'down'
     if current_x + 1 < len(board[0]) and last_direction != 'left':
-        if not board[0][current_x + 1]:
+        if not board[current_y][current_x + 1]:
             direction = 'right'
     elif current_x > 1 and last_direction != 'right':
-        if not board[0][current_x - 1]:
+        if not board[current_y][current_x - 1]:
             direction = 'left'
     elif current_y > 0 and last_direction != 'down':
-        if not board[1][current_y + 1]:
+        if not board[current_y + 1][current_x]:
             direction = 'up'
 
     print("Last direction: {}".format(last_direction))
