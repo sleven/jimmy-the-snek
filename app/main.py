@@ -93,7 +93,7 @@ def move():
         print(snake)
         for i,pos in enumerate(snake['body']):
 
-            if i == 0 and snake['name'] != 'Sneky Snek':
+            if i == 0 and snake['name'] != 'Sneky Snek' and snake['name'] != 'you':
                 set_board(board, pos['x'] + 1, pos['y'], True)
                 set_board(board, pos['x'] - 1, pos['y'], True)
                 set_board(board, pos['x'], pos['y'] + 1, True)
