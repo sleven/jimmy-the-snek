@@ -5,6 +5,8 @@ import bottle
 
 from api import ping_response, start_response, move_response, end_response
 
+last_direction = None
+
 @bottle.route('/')
 def index():
     return '''
@@ -52,6 +54,8 @@ def start():
 
 @bottle.post('/move')
 def move():
+    global last_direction
+
     data = bottle.request.json
 
     """
@@ -75,15 +79,22 @@ def move():
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
 
-    if not board[0][current_x + 1] and current_x + 1 < len(board[0]) + 1:
-        direction = 'right'
-    elif not board[0][current_x - 1] and current_x > 0:
-        direction = 'left'
-    elif not board[1][current_y + 1] and current_y + 1 < len(board[1]) + 1:
-        direction = 'up'
+    board[0][current_x] = True
+    board[1][current_y] = True
+
+    if current_x + 1 < len(board[0]) and last_direction != 'left':
+        if not board[0][current_x + 1]:
+            direction = 'right'
+    elif current_x > 1 and last_direction != 'right':
+        if not board[0][current_x - 1]:
+            direction = 'left'
+    elif current_y + 1 < len(board[1]) and last_direction != 'down':
+        if not board[1][current_y + 1]:
+            direction = 'up'
     else:
         direction = 'down'
 
+    last_direction = direction
     return move_response(direction)
 
 
