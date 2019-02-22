@@ -84,7 +84,7 @@ def move():
 
     board = []
     for row in range(data['board']['height']):
-       board.append([False] * data['board']['width'])
+       board.append([0] * data['board']['width'])
 
     print_board(board)
 
@@ -94,12 +94,12 @@ def move():
         for i,pos in enumerate(snake['body']):
 
             if i == 0 and snake['name'] != 'Sneky Snek' and snake['name'] != 'you':
-                set_board(board, pos['x'] + 1, pos['y'], True)
-                set_board(board, pos['x'] - 1, pos['y'], True)
-                set_board(board, pos['x'], pos['y'] + 1, True)
-                set_board(board, pos['x'], pos['y'] - 1, True)
+                set_board(board, pos['x'] + 1, pos['y'], 'B')
+                set_board(board, pos['x'] - 1, pos['y'], 'B')
+                set_board(board, pos['x'], pos['y'] + 1, 'B')
+                set_board(board, pos['x'], pos['y'] - 1, 'B')
 
-            set_board(board, pos['x'], pos['y'], True)
+            set_board(board, pos['x'], pos['y'], 'S')
 
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
