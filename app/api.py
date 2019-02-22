@@ -13,7 +13,7 @@ def start_response(args):
         headers={
             "Content-Type": "application/json"
         },
-        body=json.dumps(**args)
+        body=json.dumps(args)
     )
 
 def move_response(move):
