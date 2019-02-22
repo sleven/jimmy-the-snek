@@ -52,10 +52,23 @@ def start():
     return start_response(args)
 
 def set_board(board, xpos, ypos, val):
+
+    print("Setting {},{}".format(xpos, ypos))
     try:
         board[ypos][xpos] = val
     except Exception:
         pass
+    print_board(board)
+
+def print_board(board):
+    for i,row in enumerate(board):
+        print("{}:\t".format(i), end='')
+        for char in row:
+            if char:
+                print('X', end='')
+            else:
+                print('O', end='')
+        print()
 
 @bottle.post('/move')
 def move():
@@ -69,15 +82,18 @@ def move():
     """
     print(json.dumps(data))
 
-    board = [
-        [[False] * data['board']['width']] * data['board']['height'],
-    ]
+    board = []
+    for row in range(data['board']['height']):
+       board.append([False] * data['board']['width'])
+
+    print_board(board)
 
     for snake in data['board']['snakes']:
         print("snake")
         print(snake)
         for i,pos in enumerate(snake['body']):
-            if i == 0:
+
+            if i == 0 and snake['name'] != 'Sneky Snek':
                 set_board(board, pos['x'] + 1, pos['y'], True)
                 set_board(board, pos['x'] - 1, pos['y'], True)
                 set_board(board, pos['x'], pos['y'] + 1, True)
@@ -88,8 +104,7 @@ def move():
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
 
-    for row in board:
-        print(row)
+    print_board(board)
 
     direction = 'down'
     if current_x + 1 < len(board[0]) and last_direction != 'left':
@@ -101,7 +116,7 @@ def move():
     elif current_y > 0 and last_direction != 'down':
         if not board[current_y + 1][current_x]:
             direction = 'up'
-
+    print("Current head: {},{}".format(current_x, current_y))
     print("Last direction: {}".format(last_direction))
     print("Moving: {}".format(direction))
     last_direction = direction
