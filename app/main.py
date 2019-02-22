@@ -73,8 +73,9 @@ def move():
     for snake in data['board']['snakes']:
         print("snake")
         print(snake)
-        board[0][snake['body'][0]['x']] = True
-        board[1][snake['body'][0]['y']] = True
+        for pos in snake['body']:
+            board[0][pos['x']] = True
+            board[1][pos['y']] = True
 
     current_x = data['you']['body'][0]['x']
     current_y = data['you']['body'][0]['y']
